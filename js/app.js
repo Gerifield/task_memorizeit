@@ -27,8 +27,47 @@ var Todos = Backbone.Collection.extend({
 });
 
 
+
+var TodoRouter = Backbone.Router.extend({
+	routes: {
+		'': 'home',
+		'task': 'taskView',
+		'todo': 'todoView',
+		'notes': 'notesView'
+	},
+	home: function (){
+		console.log('home');
+	},
+	taskView: function (){
+		console.log('taskView');
+	},
+	todoView: function (){
+		console.log('todoView');
+	},
+	notesView: function (){
+		console.log('notesView');
+	}
+
+});
+
+
+var appRouter = new TodoRouter();
+Backbone.history.start(); 
+
 $(function(){
 
-	$('#main-menu').mmenu();
+	var $menu = $('#main-menu');
+	$menu.mmenu(/*{
+		onClick: {
+			preventDefault: true,
+			setSelected: false
+		}
+	}*/);
+
+	$menu.find('a').on('click', function(e){
+		var href = $(this).attr('href');
+		//window.location.hash = href;
+		window.location = href;
+	});
 
 });
