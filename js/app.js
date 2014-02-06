@@ -26,6 +26,7 @@ var Todos = Backbone.Collection.extend({
 	model: Todo
 });
 
+var todos = new Todos([new SimpleTask({ task: 'Teszt1'}), new SimpleTask({ task: 'Teszt2'}), new SimpleTask({ task: 'Teszt3'}) ]);
 
 var HomeView = Backbone.View.extend({
 	
@@ -45,13 +46,30 @@ var TaskView = Backbone.View.extend({
 	
 	el: '#content', //load here
 
+	events: {
+		"submit #addsimpletask": "addOneSimpleTask"
+	},
+
 	initialize: function(){
+		//this.listenTo(todos, 'change', this.render);
+		this.collection.on('add', this.render, this); //change for model only...
 		this.render();
 	},
 	render: function(){
+		console.log("render");
 		var src = $('#taskView-template').html();
-		this.$el.html(src);
+		var template = _.template(src, {
+			tasks: this.collection.toJSON()
+		});
+		this.$el.html(template);
 		return this;
+	},
+
+	addOneSimpleTask: function(e){
+		e.preventDefault();
+		var newtask = $('#newsimpletask');
+		this.collection.add( new SimpleTask({task: newtask.val()}) );
+		newtask.val('');
 	}
 });
 
@@ -98,7 +116,7 @@ var TodoRouter = Backbone.Router.extend({
 	},
 	taskView: function (){
 		console.log('taskView');
-		new TaskView();
+		new TaskView({collection: todos});
 	},
 	todoView: function (){
 		console.log('todoView');

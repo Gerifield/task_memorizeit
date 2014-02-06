@@ -45,6 +45,16 @@
 
 <script type="text/template" id="taskView-template">
 	<h1>Hello tasks</h1>
+	<form id="addsimpletask">
+		<input type="text" name="newsimpletask" id="newsimpletask" />
+		<input type="submit" value="Add" />
+	</form>
+	<ul>
+		<% _(tasks).each(function(task){ %>
+			<li><%= task.task %></li>
+		<% }); %>
+	</ul>
+
 </script>
 
 <script type="text/template" id="todoView-template">
