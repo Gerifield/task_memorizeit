@@ -23,7 +23,11 @@ var SimpleNote = Todo.extend({
 })
 
 var Todos = Backbone.Collection.extend({
-	model: Todo
+	model: Todo,
+
+	initialize: function(){
+
+	}
 });
 
 var todos = new Todos([new SimpleTask({ task: 'Teszt1'}), new SimpleTask({ task: 'Teszt2'}), new SimpleTask({ task: 'Teszt3'}) ]);
@@ -52,7 +56,13 @@ var TaskView = Backbone.View.extend({
 
 	initialize: function(){
 		//this.listenTo(todos, 'change', this.render);
-		this.collection.on('add', this.render, this); //change for model only...
+		//this.collection.on('add', this.render, this); //add a new model
+		//this.collection.on('change', this.render, this); //change an existing one
+		//this.collection.on('remove', this.render, this); //delete a model
+		
+		//better for memory handling -> auto detach the listeners ( http://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html )
+		this.listenTo(this.collection, 'add', this.render);
+		this.listenTo(this.collection, 'remove', this.render);
 		this.render();
 	},
 	render: function(){
