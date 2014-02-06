@@ -27,6 +27,63 @@ var Todos = Backbone.Collection.extend({
 });
 
 
+var HomeView = Backbone.View.extend({
+	
+	el: '#content', //load here
+
+	initialize: function(){
+		this.render();
+	},
+	render: function(){
+		var src = $('#home-template').html();
+		this.$el.html(src);
+		return this;
+	}
+});
+
+var TaskView = Backbone.View.extend({
+	
+	el: '#content', //load here
+
+	initialize: function(){
+		this.render();
+	},
+	render: function(){
+		var src = $('#taskView-template').html();
+		this.$el.html(src);
+		return this;
+	}
+});
+
+var TodoView = Backbone.View.extend({
+	
+	el: '#content', //load here
+
+	initialize: function(){
+		this.render();
+	},
+	render: function(){
+		var src = $('#todoView-template').html();
+		this.$el.html(src);
+		return this;
+	}
+});
+
+
+var NotesView = Backbone.View.extend({
+	
+	el: '#content', //load here
+
+	initialize: function(){
+		this.render();
+	},
+	render: function(){
+		var src = $('#notesView-template').html();
+		this.$el.html(src);
+		return this;
+	}
+});
+
 
 var TodoRouter = Backbone.Router.extend({
 	routes: {
@@ -37,19 +94,22 @@ var TodoRouter = Backbone.Router.extend({
 	},
 	home: function (){
 		console.log('home');
+		new HomeView();
 	},
 	taskView: function (){
 		console.log('taskView');
+		new TaskView();
 	},
 	todoView: function (){
 		console.log('todoView');
+		new TodoView();
 	},
 	notesView: function (){
 		console.log('notesView');
+		new NotesView();
 	}
 
 });
-
 
 var appRouter = new TodoRouter();
 Backbone.history.start(); 
